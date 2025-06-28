@@ -47,4 +47,4 @@ def extract_pngs(json_file, out_dir):
             with open(out_path, 'wb') as out:
                 out.write(png)
             saved.append(out_path)
-    return saved 
+    return saved
