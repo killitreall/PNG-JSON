@@ -132,4 +132,5 @@ with gr.Blocks(css=custom_css) as demo:
                 return gr.update(interactive=bool(file))
             json_in.change(json_changed, inputs=json_in, outputs=btn2)
 
-demo.launch(inbrowser=True) 
+if __name__ == "__main__":
+    demo.launch(inbrowser=True)
