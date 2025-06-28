@@ -5,39 +5,41 @@ from pack_tools import pack_png_sequence, extract_pngs
 MAX_JSON_SIZE_MB = 200
 
 custom_css = """
-.gr-button, button.svelte-1ipelgc, button.svelte-1ipelgc:active, button.svelte-1ipelgc:focus {
+.gr-button,
+button.svelte-1ipelgc,
+button.svelte-1ipelgc:active,
+button.svelte-1ipelgc:focus {
     background: orange !important;
     border-color: #e69500 !important;
     color: #fff !important;
 }
-.gr-button[disabled], button.svelte-1ipelgc[disabled] {
+.gr-button[disabled],
+button.svelte-1ipelgc[disabled] {
     background: #ccc !important;
     color: #888 !important;
     border-color: #aaa !important;
     cursor: not-allowed !important;
 }
 .gr-step {
-    border: 2px solid #ccc; /* Белая и блекловатая обводка */
+    border: 2px solid #ccc;
     border-radius: 10px;
-    padding: 18px 18px 10px 18px;
+    padding: 18px 18px 10px;
     margin-bottom: 18px;
-    background: transparent; /* Прозрачный фон */
+    background: transparent;
 }
 .gr-step-title {
     font-weight: bold;
-    color: #fff; /* Белый цвет текста заголовка */
+    color: #fff;
     margin-bottom: 8px;
     font-size: 1.1em;
 }
-
 .main-content-row {
-    width: 50% !important; /* Ширина 50% от родительского контейнера */
-    margin: 0 auto !important; /* Автоматические отступы для центрирования */
+    width: 50% !important;
+    margin: 0 auto !important;
 }
-
 .gr-files .file-list {
-    max-height: 300px; /* Примерная максимальная высота, можно подкорректировать */
-    overflow-y: auto; /* Добавить вертикальную прокрутку */
+    max-height: 300px;
+    overflow-y: auto;
 }
 """
 
