@@ -1,2 +1,2 @@
 # PNG-JSON
-killitreall/PNG-JSON converter
+PNG-JSON converter
