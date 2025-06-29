@@ -1,13 +1,29 @@
 # PNG-JSON
 
-Convert a PNG sequence to Bodymovin JSON and extract the frames back.
+PNG-JSON — это инструмент для конвертации последовательности PNG-кадров в Bodymovin JSON и обратно.
 
-## Install
-```bash
-pip install -r requirements.txt
-```
+## Возможности
+- Конвертация набора PNG-изображений в Bodymovin JSON-анимацию
+- Извлечение кадров из Bodymovin JSON обратно в PNG
+- Удобный веб-интерфейс на базе Gradio
 
-## Run
+## Установка
+1. Склонируйте репозиторий или скачайте архив с проектом.
+2. Установите зависимости:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Запуск
+Запустите приложение командой:
 ```bash
 python gradio_app.py
 ```
+
+После запуска откроется веб-интерфейс, где вы сможете:
+- Загрузить PNG-кадры и получить Bodymovin JSON
+- Загрузить Bodymovin JSON и извлечь из него PNG-кадры
+
+---
+
+Если возникнут вопросы или потребуется помощь, создайте issue или напишите автору проекта.
