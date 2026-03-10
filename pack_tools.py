@@ -1,6 +1,5 @@
 import base64
 import json
-import os
 import re
 import struct
 from pathlib import Path
@@ -71,7 +70,7 @@ def pack_png_sequence(input_dir, output_json, fps):
 
 
 def extract_pngs(json_file, out_dir):
-    os.makedirs(out_dir, exist_ok=True)
+    Path(out_dir).mkdir(parents=True, exist_ok=True)
     with open(json_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     saved = []
@@ -81,7 +80,7 @@ def extract_pngs(json_file, out_dir):
             idx = int(re.search(r'\d+$', asset.get('id', '0')).group())
             b64 = img_data.split(',', 1)[1]
             png = base64.b64decode(b64)
-            out_path = os.path.join(out_dir, f'frame_{idx:03}.png')
+            out_path = Path(out_dir) / f'frame_{idx:03}.png'
             with open(out_path, 'wb') as out:
                 out.write(png)
             saved.append(out_path)

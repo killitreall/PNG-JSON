@@ -5,49 +5,17 @@ from pack_tools import pack_png_sequence, extract_pngs
 MAX_JSON_SIZE_MB = 200
 
 custom_css = """
-.gr-button,
-button.svelte-1ipelgc,
-button.svelte-1ipelgc:active,
-button.svelte-1ipelgc:focus {
-    background: orange !important;
-    border-color: #e69500 !important;
-    color: #fff !important;
+.gr-button, button.svelte-1ipelgc, button.svelte-1ipelgc:active, button.svelte-1ipelgc:focus {
+    background: orange !important; border-color: #e69500 !important; color: #fff !important;
 }
-.gr-button[disabled],
-button.svelte-1ipelgc[disabled] {
-    background: #ccc !important;
-    color: #888 !important;
-    border-color: #aaa !important;
-    cursor: not-allowed !important;
+.gr-button[disabled], button.svelte-1ipelgc[disabled] {
+    background: #ccc !important; color: #888 !important; border-color: #aaa !important; cursor: not-allowed !important;
 }
-.gr-step {
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 18px 18px 10px;
-    margin-bottom: 18px;
-    background: transparent;
-}
-.gr-step-title {
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 8px;
-    font-size: 1.1em;
-}
-.main-content-row {
-    width: 50% !important;
-    margin: 0 auto !important;
-}
-.gr-files .file-list {
-    max-height: 300px;
-    overflow-y: auto;
-}
-.gr-step,
-.gr-step > *,
-.gr-step .block,
-.gr-step .wrap,
-.gr-step .gap {
-    overflow: visible !important;
-}
+.gr-step { border: 2px solid #ccc; border-radius: 10px; padding: 18px 18px 10px; margin-bottom: 18px; background: transparent; }
+.gr-step-title { font-weight: bold; color: #fff; margin-bottom: 8px; font-size: 1.1em; }
+.main-content-row { width: 50% !important; margin: 0 auto !important; }
+.gr-files .file-list { max-height: 300px; overflow-y: auto; }
+.gr-step, .gr-step > *, .gr-step .block, .gr-step .wrap, .gr-step .gap { overflow: visible !important; }
 """
 
 def pack_png_interface(png_paths, fps):
@@ -55,10 +23,7 @@ def pack_png_interface(png_paths, fps):
         return None, "Ошибка: Не выбраны PNG-файлы!"
     with tempfile.TemporaryDirectory() as tmpdir:
         for png_path in png_paths:
-            fname = os.path.basename(png_path)
-            with open(png_path, 'rb') as infile, \
-                 open(os.path.join(tmpdir, fname), 'wb') as outfile:
-                outfile.write(infile.read())
+            shutil.copy2(png_path, os.path.join(tmpdir, os.path.basename(png_path)))
         output_json = os.path.join(tmpdir, 'output.json')
         pack_png_sequence(tmpdir, output_json, int(fps))
         fd, temp_path = tempfile.mkstemp(suffix='.json')

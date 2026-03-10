@@ -1,2 +1,2 @@
 @echo off
-python PNG-JSON.py 
+if exist .venv\Scripts\python.exe (.venv\Scripts\python.exe PNG-JSON.py) else (python PNG-JSON.py)
