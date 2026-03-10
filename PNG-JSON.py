@@ -41,6 +41,13 @@ button.svelte-1ipelgc[disabled] {
     max-height: 300px;
     overflow-y: auto;
 }
+.gr-step,
+.gr-step > *,
+.gr-step .block,
+.gr-step .wrap,
+.gr-step .gap {
+    overflow: visible !important;
+}
 """
 
 def pack_png_interface(png_paths, fps):
@@ -61,7 +68,6 @@ def pack_png_interface(png_paths, fps):
 
 def extract_pngs_interface(json_path):
     try:
-        # Проверяем размер файла
         size = os.path.getsize(json_path)
         size_mb = size / (1024 * 1024)
         if size == 0:
@@ -85,7 +91,7 @@ def extract_pngs_interface(json_path):
     except Exception as e:
         return None, f"Ошибка: {e}"
 
-with gr.Blocks(css=custom_css) as demo:
+with gr.Blocks() as demo:
     with gr.Column(elem_classes=["main-content-row"]):
         gr.Markdown("# PNG ⇄ JSON Bodymovin")
         with gr.Tab("PNG → JSON"):
@@ -96,21 +102,29 @@ with gr.Blocks(css=custom_css) as demo:
                         pngs = gr.Files(label="PNG-файлы", file_types=[".png"], height=350)
                     with gr.Column(elem_classes=["gr-step"]):
                         gr.Markdown("""<div class='gr-step-title'>Шаг 2</div>Укажите FPS (частоту кадров).""")
-                        fps = gr.Number(label="FPS", value=30, precision=0)
+                        fps = gr.Dropdown(choices=["24", "25", "30", "60", "120"], label="FPS", value="30", allow_custom_value=True)
                     with gr.Column(elem_classes=["gr-step"]):
                         gr.Markdown("""<div class='gr-step-title'>Шаг 3</div>Нажмите <b>Собрать JSON</b> и скачайте результат.""")
                         btn1 = gr.Button("Собрать JSON", interactive=False)
-                        json_out = gr.File(label="Скачать JSON", visible=False)
-                        status = gr.Markdown(visible=False)
+                        status = gr.Markdown("")
+                        json_out = gr.File(label="Скачать JSON")
+
             def on_pack(pngs, fps):
                 if not pngs:
-                    return gr.update(value=None, visible=False), gr.update(value="Ошибка: Не выбраны PNG-файлы!", visible=True)
-                result, msg = pack_png_interface(pngs, fps)
-                return gr.update(value=result, visible=bool(result)), gr.update(value=msg, visible=True)
+                    return None, "Ошибка: Не выбраны PNG-файлы!"
+                try:
+                    fps_val = int(float(fps))
+                except (ValueError, TypeError):
+                    return None, "Ошибка: FPS должен быть числом!"
+                result, msg = pack_png_interface(pngs, fps_val)
+                return result, msg
+
             btn1.click(on_pack, inputs=[pngs, fps], outputs=[json_out, status])
+
             def files_changed(files):
                 return gr.update(interactive=bool(files))
             pngs.change(files_changed, inputs=pngs, outputs=btn1)
+
         with gr.Tab("JSON → PNG"):
             with gr.Row():
                 with gr.Column():
@@ -135,4 +149,4 @@ with gr.Blocks(css=custom_css) as demo:
             json_in.change(json_changed, inputs=json_in, outputs=btn2)
 
 if __name__ == "__main__":
-    demo.launch(inbrowser=True)
+    demo.launch(inbrowser=True, css=custom_css)
